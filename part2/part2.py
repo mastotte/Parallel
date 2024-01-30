@@ -21,6 +21,11 @@ def homework_reduction_source(partitions):
 
     # implement me!
     function_body = ""
+    for i in range(partitions):
+        function_body += f"  a[{i}] += a[{i+partitions}];\n"
+
+    for i in range(partitions):
+        function_body += f"  a[{0}] += a[{i}];\n"
 
     # closing brace
     function_close = "}"

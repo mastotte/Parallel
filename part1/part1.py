@@ -23,6 +23,11 @@ def homework_loop_sequential_source(chain_length, unroll_factor):
     function = "void homework_loop_sequential(float *b, int size) {"
     #implement me!
     function_body = ""
+    print("Unroll Factor: ", unroll_factor,"   Chain Length: ",chain_length)
+    for j in range(unroll_factor):
+        for i in range(1, chain_length+1):
+            function_body += f"  b[{j}] += {i}.0f;\n"
+    
     function_close = "}"
     return "\n".join([function, function_body, function_close])
 
@@ -38,6 +43,10 @@ def homework_loop_interleaved_source(chain_length, unroll_factor):
     function = "void homework_loop_interleaved(float *b, int size) {"
     #implement me!
     function_body = ""
+    for i in range(chain_length):
+        for j in range(unroll_factor):
+            function_body += f"  b[{j}] += {i+1}.0f;\n"
+
     function_close = "}"
     return "\n".join([function, function_body, function_close])
 
