@@ -27,10 +27,11 @@ def homework_reduction_source(partitions):
     function_body += f"\n      a[0] += a[i];"
     function_body += "\n    }"
     function_body += "\n  }"
-    function_body += "\n  for (int i = 1; i < {partitions}; ++i) {"
+    function_body += f"\n  for (int i = 1; i < {partitions}; ++i) {{"
     function_body += "\n    a[0] += a[i * partition_size];"
+    function_body += "\n}"
     # closing brace
-    function_close = "}"
+    function_close = "\n}"
     return "\n".join([function, function_body,function_close])
 
 
