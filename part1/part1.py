@@ -22,12 +22,15 @@
 def homework_loop_sequential_source(chain_length, unroll_factor):
     function = "void homework_loop_sequential(float *b, int size) {"
     #implement me!
-    function_body = ""
+    function_body = f"  for(int k = 0; k < size; k += {unroll_factor})"
+    function_body += "{\n"
     print("Unroll Factor: ", unroll_factor,"   Chain Length: ",chain_length)
+
     for j in range(unroll_factor):
         for i in range(1, chain_length+1):
-            function_body += f"  b[{j}] += {i}.0f;\n"
+            function_body += f"  b[k+{j}] += {i}.0f;\n"
     
+    function_body += "}"
     function_close = "}"
     return "\n".join([function, function_body, function_close])
 
