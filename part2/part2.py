@@ -24,21 +24,12 @@ def homework_reduction_source(partitions):
     function_body = f"\n  int partition_size = size / {partitions};"
     function_body += f"\n  for (int p = 0; p < {partitions}; ++p) {{"
     function_body += f"\n    for (int i = p * partition_size + 1; i < (p + 1) * partition_size; ++i) {{"
-    function_body += f"\n      a[0] += a[i];"
+    function_body += f"\n      a[p*partition_size] += a[i+(p*partition_size)];"
     function_body += "\n    }"
     function_body += "\n  }"
-    function_body += f"\n  for (int i = 1; i < {partitions}; ++i) {{"
+    function_body += f"\n  for (int i = 0; i < {partitions}; ++i) {{"
     function_body += "\n    a[0] += a[i * partition_size];"
     function_body += "\n}"
     # closing brace
     function_close = "\n}"
     return "\n".join([function, function_body,function_close])
-
-
-"""
-for i in range(partitions):
-        function_body += f"  a[{i}] += a[{i+partitions}];\n"
-
-    for i in range(partitions):
-        function_body += f"  a[{0}] += a[{i}];\n"
-"""
