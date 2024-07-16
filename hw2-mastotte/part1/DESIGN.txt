@@ -1,0 +1,26 @@
+Design Document for Homework 2
+Max Totten, CSE 113
+
+Part 1-------------
+
+Function: filter.h
+
+Explanation: Implement Petersen's filter lock.
+n-1 levels to pass through to get to the critical section, where the number of threads is n. 
+Only 1 thread allowed in the critical section, 2 in the section above it, 3 above that and so on.
+
+Implementation:
+
+Each time a thread arrives at a level it will become the victim of the level. 
+
+while ( There are no threads in higher levels AND I am the victim of this level )
+    spin and do nothing
+    
+
+
+Part 2--------------
+
+The Fair Reader-Writer lock that I am going to try to implement is a lock that works like so:
+Writers will fight over control of the mutex, while readers are allowed to read whenever a 
+writer does not have control of the mutex. Writers set 'writerFlag' to 1 to signal that they 
+are in control of the mutex.
