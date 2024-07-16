@@ -1,0 +1,72 @@
+Design Document for HW1, CSE 113
+Max Totten
+
+Part 1----------
+
+Function: homework_loop_sequential_source
+
+Purpose: Sequentially unroll the reference loop using loop unrolling.
+
+Explanation: Expand every loop iteration by the unroll factor. 
+For example: 
+    for(i = 0; i < 4; i++){
+        print("hello")
+        print("goodbye)
+    }
+
+    When given an unroll factor of 2, this loop would unroll to:
+
+    for(i = 0; i < 4/2; i++){
+        print("hello")
+        print("goodbye)
+        print("hello")
+        print("goodbye)
+    }
+
+Function: homework_loop_interleaved_source
+
+Purpose: Unroll the loop, then interleave dependent actions.
+
+Explanation: The contents of each iteration of the loop should be the same, but ordered differently.
+Actions that act upon the same register or block of memory can be dependent on each other, and can lessen the
+effectiveness of parallelism. So, we try to separate actions operating on the same object as far as we can. 
+In this example we separate them by the unrolling factor.
+
+Part 2----------
+
+Function: homework_reduction_source
+
+Purpose: Unroll by a factor of "partitions", splitting the loop into N partitions.
+
+Explanation: We have a variable "partitions" that we want to operate around. 
+If we have 8 items and 2 partitions in list a, we want the sum of a[0->3] to be in
+a[0], and the sum of a[4->7] to be in a[4]. Then, we sum a[0] and a[4]. This way, threads can 
+do work in parallel without always having to rewrite over a[0].
+
+Part 3----------
+
+Function: sequential_increment
+
+Purpose: Baseline increment function. 
+
+Explanation: The control for our experiment.
+
+
+Function: round_robin_increment
+
+Purpose: Increments array 'b' in a round-robin style using multiple threads.
+
+Explanation: Very similar to the homework_loop_interleaved_source, where instead of interleaving 
+lines in a for loop, we are interleaving thread operations.
+
+Function: custom_increment
+
+Purpose: Increments array 'c' in a custom style using multiple threads.
+
+Explanation: Very similar to the homework_reduction_source, where we use partitions to 
+separate the array into chunks that threads will operate on. 
+The line "int thread_size = chunk_size + (tid < remainder ? 1 : 0);" will guarantee that 
+remainders are perfectly accounted for by increasing the size of threads by 1 until there 
+will be no remainders at the end.
+
+
